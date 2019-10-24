@@ -1,6 +1,6 @@
 package com.war.canadapanda.security.service;
 
-import com.war.canadapanda.core.model.db.UserInfo;
+import com.war.canadapanda.core.model.UserInfo;
 import com.war.canadapanda.security.model.RoleName;
 import com.war.canadapanda.core.repositories.UserInfoRepository;
 import com.war.canadapanda.security.payload.request.LoginPayload;

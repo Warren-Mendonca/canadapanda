@@ -1,7 +1,7 @@
 package com.war.canadapanda.security.payload.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.war.canadapanda.core.model.db.UserInfo;
+import com.war.canadapanda.core.model.UserInfo;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;

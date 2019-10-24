@@ -1,6 +1,5 @@
 package com.war.canadapanda.users.controller;
 
-import com.war.canadapanda.core.model.db.UserInfo;
 import com.war.canadapanda.security.payload.response.UserPrincipal;
 import com.war.canadapanda.security.util.CurrentUser;
 import com.war.canadapanda.users.payload.response.UserIdentityAvailability;
