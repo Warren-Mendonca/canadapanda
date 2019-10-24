@@ -1,6 +1,6 @@
 package com.war.canadapanda.core.repositories;
 
-import com.war.canadapanda.core.model.db.UserInfo;
+import com.war.canadapanda.core.model.UserInfo;
 import org.socialsignin.spring.data.dynamodb.repository.EnableScan;
 import org.springframework.data.repository.CrudRepository;
 
