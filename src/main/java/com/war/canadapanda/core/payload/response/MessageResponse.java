@@ -1,4 +1,4 @@
-package com.war.canadapanda.security.payload.response;
+package com.war.canadapanda.core.payload.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ApiResponse {
+public class MessageResponse {
     private Boolean success;
     private String message;
 }

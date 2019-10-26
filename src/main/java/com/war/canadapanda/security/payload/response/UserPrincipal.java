@@ -1,7 +1,7 @@
 package com.war.canadapanda.security.payload.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.war.canadapanda.core.model.UserInfo;
+import com.war.canadapanda.core.model.UserInfoModel;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -33,7 +33,7 @@ public class UserPrincipal implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static UserPrincipal create(UserInfo user) {
+    public static UserPrincipal create(UserInfoModel user) {
         List<GrantedAuthority> authorities = user.getRoles().stream().map(SimpleGrantedAuthority::new
         ).collect(Collectors.toList());
 

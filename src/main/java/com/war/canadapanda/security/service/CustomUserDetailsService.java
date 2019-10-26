@@ -1,11 +1,11 @@
 package com.war.canadapanda.security.service;
 
-import com.war.canadapanda.core.model.UserInfo;
-import com.war.canadapanda.security.model.RoleName;
+import com.war.canadapanda.core.model.UserInfoModel;
+import com.war.canadapanda.core.payload.response.MessageResponse;
 import com.war.canadapanda.core.repositories.UserInfoRepository;
+import com.war.canadapanda.security.model.RoleName;
 import com.war.canadapanda.security.payload.request.LoginPayload;
 import com.war.canadapanda.security.payload.request.SignUpPayload;
-import com.war.canadapanda.security.payload.response.ApiResponse;
 import com.war.canadapanda.security.payload.response.JwtResponse;
 import com.war.canadapanda.security.payload.response.UserPrincipal;
 import com.war.canadapanda.security.util.JwtTokenProvider;
@@ -43,14 +43,14 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserInfo userInfo = userInfoRepository.findByUsername(username)
+        UserInfoModel userInfoModel = userInfoRepository.findByUsername(username)
                                     .orElseThrow(() -> new UsernameNotFoundException("No user found with username : " + username));
 
-        return UserPrincipal.create(userInfo);
+        return UserPrincipal.create(userInfoModel);
     }
 
     public UserDetails loadUserById(String id){
-        UserInfo user = userInfoRepository.findById(id).orElseThrow(
+        UserInfoModel user = userInfoRepository.findById(id).orElseThrow(
                 () -> new UsernameNotFoundException("User not found with id : " + id)
         );
 
@@ -73,23 +73,23 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     public ResponseEntity<?> registerUser(SignUpPayload signUpPayload) {
         if(userInfoRepository.existsByUsername(signUpPayload.getUsername())) {
-            return new ResponseEntity<>(new ApiResponse(false, "Username is already taken!"),
+            return new ResponseEntity<>(new MessageResponse(false, "Username is already taken!"),
                     HttpStatus.BAD_REQUEST);
         }
 
         if(userInfoRepository.existsByEmail(signUpPayload.getEmail())) {
-            return new ResponseEntity<>(new ApiResponse(false, "Email Address already in use!"),
+            return new ResponseEntity<>(new MessageResponse(false, "Email Address already in use!"),
                     HttpStatus.BAD_REQUEST);
         }
-        UserInfo userInfo = new UserInfo(signUpPayload.getUsername(), signUpPayload.getEmail(), signUpPayload.getFirstName(), signUpPayload.getLastName());
-        userInfo.setPassword(passwordEncoder.encode(signUpPayload.getPassword()));
-        userInfo.setRoles(Collections.singletonList(RoleName.ROLE_USER.toString()));
+        UserInfoModel userInfoModel = new UserInfoModel(signUpPayload.getUsername(), signUpPayload.getEmail(), signUpPayload.getFirstName(), signUpPayload.getLastName());
+        userInfoModel.setPassword(passwordEncoder.encode(signUpPayload.getPassword()));
+        userInfoModel.setRoles(Collections.singletonList(RoleName.ROLE_USER.toString()));
 
-        UserInfo result = userInfoRepository.save(userInfo);
+        UserInfoModel result = userInfoRepository.save(userInfoModel);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/users/{username}")
                 .buildAndExpand(result.getUsername()).toUri();
 
-        return ResponseEntity.created(location).body(new ApiResponse(true, "UserInfo registered successfully"));
+        return ResponseEntity.created(location).body(new MessageResponse(true, "UserInfo registered successfully"));
     }
 }

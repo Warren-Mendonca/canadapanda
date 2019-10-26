@@ -1,6 +1,6 @@
 package com.war.canadapanda.users.service;
 
-import com.war.canadapanda.core.model.UserInfo;
+import com.war.canadapanda.core.model.UserInfoModel;
 import com.war.canadapanda.core.repositories.UserInfoRepository;
 import com.war.canadapanda.security.payload.response.UserPrincipal;
 import com.war.canadapanda.users.payload.response.UserIdentityAvailability;
@@ -29,7 +29,7 @@ public class UserInfoService {
     }
 
     public UserProfile getUserProfile(String username) {
-        UserInfo user = userInfoRepository.findByUsername(username)
+        UserInfoModel user = userInfoRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("No user found with username : " + username));
         return new UserProfile(user.getUsername(), user.getFirstName(), user.getLastName(), user.getEmail());
     }
